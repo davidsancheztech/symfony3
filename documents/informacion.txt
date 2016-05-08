@@ -1,0 +1,61 @@
+DOCUMENTACION
+
+Formularios
+http://symfony.com/doc/current/best_practices/forms.html
+
+Validaci—n
+http://symfony.com/doc/current/book/validation.html
+
+Constraints
+http://symfony.com/doc/current/reference/constraints
+
+Types
+http://symfony.com/doc/current/reference/forms/type.html
+
+Relaciones entre entidades y relaciones
+http://symfony.com/doc/current/book/doctrine.html#entity-relationships-associations
+http://doctrine-orm.readthedocs.io/projects/doctrine-orm/en/latest/reference/association-mapping.html
+
+CONSOLA
+Crear Bundle:
+cd www/symfony3
+php bin/console generate:bundle --namespace=MiBundle --no-debug
+
+
+Borrar cache:
+php bin/console cache:clear --env=prod
+php bin/console cache:clear -e prod
+
+php bin/console list --no-debug
+
+
+
+- GENERAR ENTIDADES A TRAVES DE UNA BD (MAPPING)
+(Si da error, borra /var/cache/*)
+php bin/console doctrine:mapping:convert xml ./src/AppBundle/Resources/doctrine/metadata/orm --from-database --force --no-debug
+
+IMPORTAR DATOS EN YML
+php bin/console doctrine:mapping:import AppBundle yml --no-debug
+
+GENERAR ENTIDADES DE INTERECTUACION
+php bin/console doctrine:generate:entities AppBundle --no-debug
+
+
+- GENERAR ENTIDAD EN NUESTRO CODIGO
+php bin/console doctrine:generate:entity --no-debug
+AppBundle:Curso
+yml
+
+- UPDATE TABLAS BD DE LAS ENTIDADES
+php bin/console doctrine:schema:update --force --no-debug
+
+- ELIMINAR ESQUEMA DE TABLAS
+php bin/console doctrine:schema:drop --force --no-debug
+
+- CREAR TABLAS EN BASE DE DATOS
+php bin/console doctrine:schema:create --no-debug
+
+
+- CREAR FORMULARIOS DESDE CONSOLA
+php bin/console doctrine:generate:form AppBundle:Curso --no-debug
+
