@@ -57,6 +57,51 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
             return array (  '_controller' => 'BlogBundle\\Controller\\DefaultController::indexAction',  '_route' => 'blog_homepage',);
         }
 
+        if (0 === strpos($pathinfo, '/tags')) {
+            // blog_index_tag
+            if ($pathinfo === '/tags') {
+                return array (  '_controller' => 'BlogBundle\\Controller\\TagController::indexAction',  '_route' => 'blog_index_tag',);
+            }
+
+            // blog_add_tag
+            if ($pathinfo === '/tags/add') {
+                return array (  '_controller' => 'BlogBundle\\Controller\\TagController::addAction',  '_route' => 'blog_add_tag',);
+            }
+
+            // blog_delete_tag
+            if (0 === strpos($pathinfo, '/tags/delete') && preg_match('#^/tags/delete/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'blog_delete_tag')), array (  '_controller' => 'BlogBundle\\Controller\\TagController::deleteAction',));
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/categories')) {
+            // blog_index_category
+            if ($pathinfo === '/categories') {
+                return array (  '_controller' => 'BlogBundle\\Controller\\CategoryController::indexAction',  '_route' => 'blog_index_category',);
+            }
+
+            // blog_add_category
+            if (rtrim($pathinfo, '/') === '/categories/add') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'blog_add_category');
+                }
+
+                return array (  '_controller' => 'BlogBundle\\Controller\\CategoryController::addAction',  '_route' => 'blog_add_category',);
+            }
+
+            // blog_delete_category
+            if (0 === strpos($pathinfo, '/categories/delete') && preg_match('#^/categories/delete/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'blog_delete_category')), array (  '_controller' => 'BlogBundle\\Controller\\CategoryController::deleteAction',));
+            }
+
+            // blog_edit_category
+            if (0 === strpos($pathinfo, '/categories/edit') && preg_match('#^/categories/edit/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'blog_edit_category')), array (  '_controller' => 'BlogBundle\\Controller\\CategoryController::editAction',));
+            }
+
+        }
+
         // mi_homepage
         if ($pathinfo === '/mi-bundle') {
             return array (  '_controller' => 'MiBundle\\Controller\\DefaultController::indexAction',  '_route' => 'mi_homepage',);

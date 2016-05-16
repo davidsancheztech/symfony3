@@ -21,20 +21,20 @@ class __TwigTemplate_8f0602768aa0d7b97ed7e90027131e72b7c6ade88841f1023bee4fe805e
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_144199edc487de78500be243ca9f82311f505fe9f41f64222e3f65721be1151c = $this->env->getExtension("native_profiler");
-        $__internal_144199edc487de78500be243ca9f82311f505fe9f41f64222e3f65721be1151c->enter($__internal_144199edc487de78500be243ca9f82311f505fe9f41f64222e3f65721be1151c_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "BlogBundle:user:login.html.twig"));
+        $__internal_59a77a24a55c046fc11d9f02c21c73f58d5215321f8ba7179bca4c9faf99a005 = $this->env->getExtension("native_profiler");
+        $__internal_59a77a24a55c046fc11d9f02c21c73f58d5215321f8ba7179bca4c9faf99a005->enter($__internal_59a77a24a55c046fc11d9f02c21c73f58d5215321f8ba7179bca4c9faf99a005_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "BlogBundle:user:login.html.twig"));
 
         $this->parent->display($context, array_merge($this->blocks, $blocks));
         
-        $__internal_144199edc487de78500be243ca9f82311f505fe9f41f64222e3f65721be1151c->leave($__internal_144199edc487de78500be243ca9f82311f505fe9f41f64222e3f65721be1151c_prof);
+        $__internal_59a77a24a55c046fc11d9f02c21c73f58d5215321f8ba7179bca4c9faf99a005->leave($__internal_59a77a24a55c046fc11d9f02c21c73f58d5215321f8ba7179bca4c9faf99a005_prof);
 
     }
 
     // line 2
     public function block_content($context, array $blocks = array())
     {
-        $__internal_b95e37329be8ca3f12195bd2636fed5090079036a523b83e2936b0793897e47a = $this->env->getExtension("native_profiler");
-        $__internal_b95e37329be8ca3f12195bd2636fed5090079036a523b83e2936b0793897e47a->enter($__internal_b95e37329be8ca3f12195bd2636fed5090079036a523b83e2936b0793897e47a_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "content"));
+        $__internal_9f759dcb7d7cfc492481529384f3c41741b4bc91bd4948f19854e0d07be7ddf7 = $this->env->getExtension("native_profiler");
+        $__internal_9f759dcb7d7cfc492481529384f3c41741b4bc91bd4948f19854e0d07be7ddf7->enter($__internal_9f759dcb7d7cfc492481529384f3c41741b4bc91bd4948f19854e0d07be7ddf7_prof = new Twig_Profiler_Profile($this->getTemplateName(), "block", "content"));
 
         // line 3
         echo "    ";
@@ -78,12 +78,28 @@ class __TwigTemplate_8f0602768aa0d7b97ed7e90027131e72b7c6ade88841f1023bee4fe805e
     <div class=\"col-lg-4\">
     <h2>Registrate</h2>
     <hr/>
-   ";
+    ";
         // line 34
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getAttribute($this->getAttribute((isset($context["app"]) ? $context["app"] : $this->getContext($context, "app")), "session", array()), "flashbag", array(), "method"), "get", array(0 => "status"), "method"));
+        foreach ($context['_seq'] as $context["_key"] => $context["message"]) {
+            // line 35
+            echo "        <div class=\"alert alert-";
+            echo twig_escape_filter($this->env, $this->getAttribute($context["message"], "css", array()), "html", null, true);
+            echo "\">";
+            echo twig_escape_filter($this->env, $this->getAttribute($context["message"], "status", array()), "html", null, true);
+            echo "</div>
+    ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['message'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 37
+        echo "   ";
         echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form_start', array("action" => "", "method" => "POST"));
         echo "
    ";
-        // line 35
+        // line 38
         echo         $this->env->getExtension('form')->renderer->renderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'form_end');
         echo "
     </div>
@@ -91,7 +107,7 @@ class __TwigTemplate_8f0602768aa0d7b97ed7e90027131e72b7c6ade88841f1023bee4fe805e
     <div class=\"clearfix\"></div>
 ";
         
-        $__internal_b95e37329be8ca3f12195bd2636fed5090079036a523b83e2936b0793897e47a->leave($__internal_b95e37329be8ca3f12195bd2636fed5090079036a523b83e2936b0793897e47a_prof);
+        $__internal_9f759dcb7d7cfc492481529384f3c41741b4bc91bd4948f19854e0d07be7ddf7->leave($__internal_9f759dcb7d7cfc492481529384f3c41741b4bc91bd4948f19854e0d07be7ddf7_prof);
 
     }
 
@@ -107,7 +123,7 @@ class __TwigTemplate_8f0602768aa0d7b97ed7e90027131e72b7c6ade88841f1023bee4fe805e
 
     public function getDebugInfo()
     {
-        return array (  87 => 35,  83 => 34,  68 => 22,  63 => 20,  57 => 16,  51 => 13,  45 => 9,  42 => 8,  40 => 3,  34 => 2,  11 => 1,);
+        return array (  103 => 38,  98 => 37,  87 => 35,  83 => 34,  68 => 22,  63 => 20,  57 => 16,  51 => 13,  45 => 9,  42 => 8,  40 => 3,  34 => 2,  11 => 1,);
     }
 }
 /* {% extends "BlogBundle::layout.html.twig" %}*/
@@ -143,6 +159,9 @@ class __TwigTemplate_8f0602768aa0d7b97ed7e90027131e72b7c6ade88841f1023bee4fe805e
 /*     <div class="col-lg-4">*/
 /*     <h2>Registrate</h2>*/
 /*     <hr/>*/
+/*     {% for message in app.session.flashbag().get("status") %}*/
+/*         <div class="alert alert-{{message.css}}">{{ message.status }}</div>*/
+/*     {% endfor %}*/
 /*    {{ form_start(form, {'action':'', 'method':'POST'}) }}*/
 /*    {{ form_end(form) }}*/
 /*     </div>*/

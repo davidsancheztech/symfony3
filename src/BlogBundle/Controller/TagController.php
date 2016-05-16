@@ -4,54 +4,91 @@ namespace BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use BlogBundle\Entity\User;
-use BlogBundle\Form\UserType;
+use Symfony\Component\HttpFoundation\Session\Session;
+use BlogBundle\Entity\Tag;
+use BlogBundle\Form\TagType;
 
-class UserController extends Controller {
+class TagController extends Controller {
 
-    public function loginAction(Request $request)
-    {
-        $authenticationUtils = $this->get("security.authentication_utils");
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUserName = $authenticationUtils->getLastUsername();
-        
-        //CREAMOS EL FORMULARIO DE REGISTRO
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-       
-       $form->handleRequest($request);      
-       if($form->isValid())
-       {
-           $user = new User();
-           $user->setName($form->get("name")->getData());
-           $user->setSurname($form->get("surname")->getData());
-           $user->setEmail($form->get("email")->getData());
-           $user->setPassword($form->get("password")->getData());
-           $user->setRole("ROLE_USER");
-           $user->setImagen(NULL);
-           
-           $em = $this->getDoctrine()->getEntityManager();
-           $em->persist($user);
-           $flush = $em->flush();
-           
-           if($flush==NULL)
-           {
-                $status = "El usuario se ha creado correctamente";
-           }else{
-                $status = "No te has registrado correctamente";
-           }
-           
-           $status = "El usuario se ha creado correctamente";
-           
-       }else{
-           $status = "No te has registrado correctamente";
-       }
-       
-       
-        return $this->render("BlogBundle:user:login.html.twig", array(
-            "error"=>$error,
-            "last_username"=> $lastUserName,
-            "form"=> $form->createView(),
+    private $session;
+
+    public function __construct() {
+        $this->session = new Session();
+    }
+
+    public function indexAction(Request $request) {
+        /* Añadimos la etiqueta */
+        $em = $this->getDoctrine()->getEntityManager();
+        $tag_repo = $em->getRepository("BlogBundle:Tag");
+        $tags = $tag_repo->findAll();
+
+
+        return $this->render("BlogBundle:Tag:index.html.twig", array(
+                    "tags" => $tags,
         ));
     }
+
+    public function addAction(Request $request) {
+
+        $tag = new Tag();
+        $form = $this->createForm(TagType::class, $tag);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+
+                /* Añadimos la etiqueta */
+                $em = $this->getDoctrine()->getEntityManager();
+
+                $tag = new tag();
+                $tag->setName($form->get("name")->getData());
+                $tag->setDescription($form->get("description")->getData());
+
+                $em->persist($tag);
+                $flush = $em->flush();
+
+                if ($flush == NULL) {
+                    $status = "La etiqueta se ha creado correctamente";
+                    $css = "success";
+                } else {
+                    $status = "Error al añadir la etiqueta";
+                    $css = "danger";
+                }
+            } else {
+                $status = "La etiqueta no se ha creado porque el formulario no es valido!!";
+                $css = "danger";
+            }
+
+            $this->session->getFlashBag()->add("status", array(
+                "status"=>$status,
+                "css"=>$css,
+                ));
+            return $this->redirectToRoute("blog_index_tag");
+        }
+
+        return $this->render("BlogBundle:Tag:add.html.twig", array(
+                    "form" => $form->createView(),
+        ));
+    }
+
+    public function deleteAction($id) {
+        /* Borramos la etiqueta */
+        $em = $this->getDoctrine()->getEntityManager();
+        $tag_repo = $em->getRepository("BlogBundle:Tag");
+        $tag = $tag_repo->find($id);
+
+        if (count($tag->getEntryTag()) == 0) {
+            $em->remove($tag);
+            $em->flush();
+        }else{
+
+            $this->session->getFlashBag()->add("status", array(
+                "status"=>"La etiqueta no se puede borrar",
+                "css"=>"danger",
+                ));
+        }
+        return $this->redirectToRoute("blog_index_tag");
+    }
+
 }
