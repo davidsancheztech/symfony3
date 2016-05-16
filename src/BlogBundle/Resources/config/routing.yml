@@ -24,6 +24,8 @@ blog_delete_tag:
     path:     /tags/delete/{id}
     defaults: { _controller: BlogBundle:Tag:delete }   
 
+
+
 blog_index_category:
     path:     /categories
     defaults: { _controller: BlogBundle:Category:index }
@@ -39,3 +41,8 @@ blog_delete_category:
 blog_edit_category:
     path:     /categories/edit/{id}
     defaults: { _controller: BlogBundle:Category:edit }       
+    
+    
+blog_add_entry:
+    path:     /entries/add/
+    defaults: { _controller: BlogBundle:Entry:add }       

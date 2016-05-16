@@ -102,6 +102,15 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
+        // blog_add_entry
+        if (rtrim($pathinfo, '/') === '/entries/add') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'blog_add_entry');
+            }
+
+            return array (  '_controller' => 'BlogBundle\\Controller\\EntryController::addAction',  '_route' => 'blog_add_entry',);
+        }
+
         // mi_homepage
         if ($pathinfo === '/mi-bundle') {
             return array (  '_controller' => 'MiBundle\\Controller\\DefaultController::indexAction',  '_route' => 'mi_homepage',);
