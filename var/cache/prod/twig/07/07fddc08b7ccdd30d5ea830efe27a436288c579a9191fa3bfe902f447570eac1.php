@@ -15,15 +15,17 @@ class __TwigTemplate_2ebb88f0018e6183b34e5dac6df08f4d7cdd22b95f05827981a331bf6a2
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $__internal_c7adaef70d5e3ebe49ef47087da54ed452e9f66caea08ef86fdbadcb4b925e4a = $this->env->getExtension("native_profiler");
-        $__internal_c7adaef70d5e3ebe49ef47087da54ed452e9f66caea08ef86fdbadcb4b925e4a->enter($__internal_c7adaef70d5e3ebe49ef47087da54ed452e9f66caea08ef86fdbadcb4b925e4a_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "BlogBundle:Category:menu.categories.html.twig"));
+        $__internal_e8f6ac7a0d7baeb4110d05a5711c39d1cda7886950dc26837e2282fd1ebb9928 = $this->env->getExtension("native_profiler");
+        $__internal_e8f6ac7a0d7baeb4110d05a5711c39d1cda7886950dc26837e2282fd1ebb9928->enter($__internal_e8f6ac7a0d7baeb4110d05a5711c39d1cda7886950dc26837e2282fd1ebb9928_prof = new Twig_Profiler_Profile($this->getTemplateName(), "template", "BlogBundle:Category:menu.categories.html.twig"));
 
         // line 1
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable((isset($context["categories"]) ? $context["categories"] : $this->getContext($context, "categories")));
         foreach ($context['_seq'] as $context["_key"] => $context["category"]) {
             // line 2
-            echo "     <li><a href=\"#\">";
+            echo "     <li><a href=\"";
+            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("blog_read_category", array("id" => $this->getAttribute($context["category"], "id", array()))), "html", null, true);
+            echo "\">";
             echo twig_escape_filter($this->env, $this->getAttribute($context["category"], "name", array()), "html", null, true);
             echo "</a></li>
 ";
@@ -32,7 +34,7 @@ class __TwigTemplate_2ebb88f0018e6183b34e5dac6df08f4d7cdd22b95f05827981a331bf6a2
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['category'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
         
-        $__internal_c7adaef70d5e3ebe49ef47087da54ed452e9f66caea08ef86fdbadcb4b925e4a->leave($__internal_c7adaef70d5e3ebe49ef47087da54ed452e9f66caea08ef86fdbadcb4b925e4a_prof);
+        $__internal_e8f6ac7a0d7baeb4110d05a5711c39d1cda7886950dc26837e2282fd1ebb9928->leave($__internal_e8f6ac7a0d7baeb4110d05a5711c39d1cda7886950dc26837e2282fd1ebb9928_prof);
 
     }
 
@@ -52,5 +54,5 @@ class __TwigTemplate_2ebb88f0018e6183b34e5dac6df08f4d7cdd22b95f05827981a331bf6a2
     }
 }
 /* {% for category in categories %}*/
-/*      <li><a href="#">{{ category.name }}</a></li>*/
+/*      <li><a href="{{ path("blog_read_category", {"id":category.id}) }}">{{ category.name }}</a></li>*/
 /* {% endfor %}*/

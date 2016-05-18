@@ -28,8 +28,12 @@ class EntryController extends Controller {
         ));      
     }
     
-    public function indexAction($page)
+    public function indexAction(Request $request, $page)
     {
+        //Traducción
+        //var_dump($request->getSession()->get("_locale"));
+        //var_dump($this->get("translator")->trans("btn_edit"));
+        
         $em = $this->getDoctrine()->getEntityManager();
         $entry_repo=$em->getRepository("BlogBundle:Entry");
         $category_repo=$em->getRepository("BlogBundle:Category");
@@ -82,11 +86,16 @@ class EntryController extends Controller {
                 
                 //Añadimos la imagen
                 $file=$form["imagen"]->getData();
-                $ext=$file->guessExtension();
-                $file_name=time().".".$ext;
-                $file->move("uploads", $file_name);
-                $entry->setImagen($file_name);
-                
+                 
+                //Si $file no viene vacio "empty"
+                if(!empty($file) && $file != NULL){
+                    $ext=$file->guessExtension();
+                    $file_name=time().".".$ext;
+                    $file->move("uploads", $file_name);
+                    $entry->setImagen($file_name);
+                }else{
+                    $entry->setImagen(NULL);
+                }
                 //Añadimos la categoria
                 $category = $category_repo->find($form->get("category")->getData());
                 $entry->setCategory($category);
@@ -187,19 +196,23 @@ class EntryController extends Controller {
         {
             if($form->isValid())
             {
+                //No hace falta ponerlo, ya lo hace "createForm" y "handleRequest"
+                /*
                 $entry->setTitle($form->get("title")->getData());
                 $entry->setContent($form->get("content")->getData());
                 $entry->setStatus($form->get("status")->getData());
+                 */
                 
                 //Añadimos la imagen
                 $file=$form["imagen"]->getData();
-                if($file)
+                if(!empty($file) && $file != NULL)
                 {
                     $ext=$file->guessExtension();
                     $file_name=time().".".$ext;
                     $file->move("uploads", $file_name);
+                }else{
+                    $entry->setImagen($file_name);
                 }
-                $entry->setImagen($file_name);
                 
                 //Añadimos la categoria
                 $category = $category_repo->find($form->get("category")->getData());
