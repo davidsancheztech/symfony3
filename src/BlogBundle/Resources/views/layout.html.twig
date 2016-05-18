@@ -26,8 +26,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             {% block menu %}
-                            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">Link</a></li>
+                            {{ render(controller('BlogBundle:Entry:Listcategories')) }}                              
                             {% endblock %}
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -44,8 +43,9 @@
                                     {% if app.user == null %}
                                     <li><a href="{{ path("login") }}">Entrar</a></li>
                                     {% else %}
+                                    <li><a href="{{ path("blog_add_entry") }}">Añadir entrada</a></li>
                                     <li><a href="{{ path("blog_index_tag") }}">Etiquetas</a></li>
-                                     <li><a href="{{ path("blog_index_category") }}">Categorias</a></li>
+                                    <li><a href="{{ path("blog_index_category") }}">Categorias</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="{{ path("logout") }}">Salir</a></li>
                                     {% endif %}

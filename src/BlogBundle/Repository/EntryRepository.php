@@ -4,6 +4,7 @@ namespace BlogBundle\Repository;
 
 use BlogBundle\Entity\Tag;
 use BlogBundle\Entity\EntryTag;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class EntryRepository extends \Doctrine\ORM\EntityRepository {
     
@@ -29,8 +30,8 @@ class EntryRepository extends \Doctrine\ORM\EntityRepository {
                 if(count($isset_tag) == 0)
                 {
                     $tag_obj = new Tag();
-                    $tag_obj->setName(trim($tag));
-                    $tag_obj->setDescription(trim($tag));
+                    $tag_obj->setName($tag);
+                    $tag_obj->setDescription($tag);
                     
                     $em->persist($tag_obj);
                     $em->flush();   
@@ -48,4 +49,18 @@ class EntryRepository extends \Doctrine\ORM\EntityRepository {
             return $flush;        
     }
     
+    
+    public function getPaginateEntries($pageSize = 5, $currentPage = 1)
+    {
+        $em = $this->getEntityManager();
+        $dql = "SELECT e FROM BlogBundle\Entity\Entry e ORDER BY e.id DESC";
+        
+        $query = $em->createQuery($dql)
+                ->setFirstResult($pageSize * ($currentPage - 1))
+                ->setMaxResults($pageSize);
+        
+        $paginator = new Paginator($query, $fetchJoinCollection = true);
+        return $paginator;
+        
+    }
 }

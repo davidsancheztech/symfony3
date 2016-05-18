@@ -49,12 +49,8 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
         }
 
         // blog_homepage
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'blog_homepage');
-            }
-
-            return array (  '_controller' => 'BlogBundle\\Controller\\DefaultController::indexAction',  '_route' => 'blog_homepage',);
+        if (preg_match('#^/(?P<page>[^/]++)?$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'blog_homepage')), array (  '_controller' => 'BlogBundle\\Controller\\EntryController::indexAction',  'page' => 1,));
         }
 
         if (0 === strpos($pathinfo, '/tags')) {
@@ -102,13 +98,26 @@ class appProdUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirecta
 
         }
 
-        // blog_add_entry
-        if (rtrim($pathinfo, '/') === '/entries/add') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', 'blog_add_entry');
+        if (0 === strpos($pathinfo, '/entries')) {
+            // blog_add_entry
+            if (rtrim($pathinfo, '/') === '/entries/add') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'blog_add_entry');
+                }
+
+                return array (  '_controller' => 'BlogBundle\\Controller\\EntryController::addAction',  '_route' => 'blog_add_entry',);
             }
 
-            return array (  '_controller' => 'BlogBundle\\Controller\\EntryController::addAction',  '_route' => 'blog_add_entry',);
+            // blog_delete_entry
+            if (0 === strpos($pathinfo, '/entries/delete') && preg_match('#^/entries/delete/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'blog_delete_entry')), array (  '_controller' => 'BlogBundle\\Controller\\EntryController::deleteAction',));
+            }
+
+            // blog_edit_entry
+            if (0 === strpos($pathinfo, '/entries/edit') && preg_match('#^/entries/edit/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'blog_edit_entry')), array (  '_controller' => 'BlogBundle\\Controller\\EntryController::editAction',));
+            }
+
         }
 
         // mi_homepage

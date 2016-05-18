@@ -48,6 +48,8 @@ class EntryType extends AbstractType
                 "attr"=>array(
                     "class" => "form-control"
                 ),
+                "data_class"=>NULL,
+                'required' => false,
             ))
             ->add('category', EntityType::class, array(
                 "class" => "BlogBundle:Category",
